@@ -1,0 +1,39 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+dist/
+build/
+.cache/
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.log
+
+# Virtual environments
+venv/
+.venv/
+.conda/
+pip-wheel-metadata/
+
+# Env files / secrets
+.env
+.env.*
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Project-specific
+.tmp/
+*.duckdb
+*.parquet
+
