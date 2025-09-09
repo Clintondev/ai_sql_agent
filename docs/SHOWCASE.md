@@ -14,6 +14,11 @@
 - LLM: Google Gemini (via `google.generativeai`), few-shot + regras de segurança
 - UI: CLI com `rich` (opcional), pandas para exibição/tabulação
 
+## Imagens (Fluxos e Arquitetura)
+- Arquitetura: ![Arquitetura](images/architecture.svg)
+- Fluxo Natural (PT-BR): ![Fluxo Natural](images/flow-natural.svg)
+- Fluxo Manual (/sql): ![Fluxo Manual](images/flow-manual.svg)
+
 ## Arquitetura (Alto Nível)
 ```
 flowchart LR
@@ -41,6 +46,88 @@ sequenceDiagram
   A->>A: NLG (média/mín/máx, top exemplos)
   A-->>U: Tabela + Resumo
 ```
+
+## Fluxos Detalhados
+
+### Controle (end-to-end)
+```
+flowchart TD
+  U[Usuário CLI] --> CMD[Parser de Comandos]
+  CMD -->|/sql| EXEC[Executor SQL]
+  CMD -->|Pergunta NL| PB[Prompt Builder]
+  PB --> LLM[Gemini]
+  LLM --> SQL[SQL Gerado]
+  SQL --> GUARD[SQL Guard (SELECT-only, sanitize, LIMIT)]
+  GUARD -->|válido| EXEC
+  GUARD -->|inválido| FIX[Repair via LLM]
+  FIX --> GUARD
+  EXEC --> DB[(DuckDB In-Mem)]
+  DB --> VIEWS{{Views: food, food_flat}}
+  VIEWS --> DB
+  EXEC --> ENRICH[Enricher (join por code)]
+  ENRICH --> NLG[Resumo NLG]
+  NLG --> OUT[Saída: Tabela + Resumo]
+  OUT --> U
+  DB --- P[(food.parquet)]
+```
+
+### Sequência (com guarda e reparo)
+```
+sequenceDiagram
+  participant U as Usuário
+  participant A as SQLAgent
+  participant G as Gemini
+  participant D as DuckDB
+  U->>A: Pergunta NL (PT-BR)
+  A->>A: Prompt Builder (schema + regras + few-shot)
+  A->>G: generate_content(prompt)
+  G-->>A: SQL (SELECT)
+  A->>A: SQL Guard (SELECT-only, LIMIT)
+  alt inválido
+    A->>G: repair_sql(sql, erro)
+    G-->>A: SQL corrigido
+    A->>A: SQL Guard
+  end
+  A->>D: Executa SQL
+  D-->>A: DataFrame
+  A->>A: Enriquecimento (se necessário)
+  A->>A: NLG (resumo estatístico)
+  A-->>U: Tabela + Resumo
+```
+
+### Recuperação de Erros
+```
+flowchart LR
+  EXEC[Execução SQL] -. erro .-> REPAIR[LLM Repair]
+  REPAIR --> GUARD[SQL Guard]
+  GUARD --> EXEC
+```
+
+## Fluxo Intuitivo (Quadrados e Setas)
+
+### Natural (Pergunta em PT-BR)
+```
+[ Usuário ] --> [ CLI do Agente ] --> [ Constrói Prompt ] --> [ LLM (Gemini) ]
+                 |                                                         |
+                 |                            SQL (apenas SELECT)         v
+                 +---------------------> [ SQL Guard + LIMIT ] ------> [ DuckDB ]
+                                                                               |
+                                                                               v
+                                                                     [ NLG (Resumo) ]
+                                                                               |
+                                                                               v
+                                                                      [ Resposta ]
+```
+
+### Manual (Digitando /sql)
+```
+[ Usuário ] --> [ CLI do Agente ] -- /sql --> [ Executor SQL ] --> [ DuckDB ] --> [ Resposta ]
+```
+
+Notas rápidas para o leitor
+- O LLM recebe somente esquema/amostras, não o dataset completo.
+- O Guard impede qualquer DDL/DML, aceita apenas SELECT com LIMIT.
+- A view `food_flat` simplifica nutrientes, unidades e quantidades (g/ml).
 
 ## Modelo de Dados (resumo)
 - Tabela `food` (do Parquet): ~110 colunas. Destaques:
@@ -108,4 +195,3 @@ sequenceDiagram
 ## Estrutura de Arquivos
 - `sql_agent.py`: agente, LLM, CLI e views.
 - `docs/SHOWCASE.md`: este documento (visão geral, arquitetura e guia).
-
