@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SHOWCASE.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="agente-de-ia-para-consulta-nutricional-duckdb--parquet--llm">Agente de IA para Consulta Nutricional (DuckDB + Parquet + LLM)</h1>
+<h2 id="vis%C3%A3o-geral">Visão Geral</h2>
+<ul>
+<li>Objetivo: permitir perguntas em linguagem natural sobre alimentos (calorias, proteína, açúcar, sódio, categorias, volumes), respondidas via SQL gerado por IA e executado no DuckDB sobre um Parquet do Open Food Facts.</li>
+<li>Destaques:
+<ul>
+<li>Conversa em PT-BR com geração de SQL segura (apenas SELECT) e enriquecida por exemplos (few-shot).</li>
+<li>View auxiliar <code>food_flat</code> com nutrientes por 100 g e por porção, unidades e normalizações de nome/marca/categoria, além de quantidade total em g/ml.</li>
+<li>Resumo automático (NLG) dos resultados: média/mín/máx e exemplos TOP.</li>
+</ul>
+</li>
+</ul>
+<h2 id="stack-tecnol%C3%B3gica">Stack Tecnológica</h2>
+<ul>
+<li>Linguagem: Python 3.12</li>
+<li>Engine de consulta: DuckDB (in-memory) lendo Parquet</li>
+<li>Dados: Open Food Facts Parquet (<code>food.parquet</code>)</li>
+<li>LLM: Google Gemini (via <code>google.generativeai</code>), few-shot + regras de segurança</li>
+<li>UI: CLI com <code>rich</code> (opcional), pandas para exibição/tabulação</li>
+</ul>
+<h2 id="imagens-fluxos-e-arquitetura">Imagens (Fluxos e Arquitetura)</h2>
+<ul>
+<li>Arquitetura: <img src="images/architecture.svg" alt="Arquitetura"></li>
+<li>Fluxo Natural (PT-BR): <img src="images/flow-natural.svg" alt="Fluxo Natural"></li>
+<li>Fluxo Manual (/sql): <img src="images/flow-manual.svg" alt="Fluxo Manual"></li>
+</ul>
+<h2 id="arquitetura-alto-n%C3%ADvel">Arquitetura (Alto Nível)</h2>
+<pre class="hljs"><code><div>flowchart LR
+  User[Usuário CLI] --&gt;|Pergunta PT-BR| Agent[SQLAgent]
+  Agent --&gt;|Prompt c/ schema + few-shot| LLM[Gemini]
+  LLM --&gt;|SQL (SELECT)| Agent
+  Agent --&gt;|Execução| DuckDB[(DuckDB in-memory)]
+  DuckDB --&gt;|View food &amp; food_flat| Parquet[(food.parquet)]
+  DuckDB --&gt;|DataFrame| Agent
+  Agent --&gt;|Resultado + NLG| User
+</div></code></pre>
+<h2 id="fluxo-detalhado">Fluxo Detalhado</h2>
+<pre class="hljs"><code><div>sequenceDiagram
+  participant U as Usuário
+  participant A as SQLAgent (Python)
+  participant G as Gemini
+  participant D as DuckDB
+  U-&gt;&gt;A: Pergunta: &quot;quanta proteína tem um iogurte itambé por 100g?&quot;
+  A-&gt;&gt;G: Prompt (esquema, regras, exemplos)
+  G--&gt;&gt;A: SQL seguro (SELECT)
+  A-&gt;&gt;D: Executa SQL (food / food_flat)
+  D--&gt;&gt;A: DataFrame (pandas)
+  A-&gt;&gt;A: NLG (média/mín/máx, top exemplos)
+  A--&gt;&gt;U: Tabela + Resumo
+</div></code></pre>
+<h2 id="fluxos-detalhados">Fluxos Detalhados</h2>
+<h3 id="controle-end-to-end">Controle (end-to-end)</h3>
+<pre class="hljs"><code><div>flowchart TD
+  U[Usuário CLI] --&gt; CMD[Parser de Comandos]
+  CMD --&gt;|/sql| EXEC[Executor SQL]
+  CMD --&gt;|Pergunta NL| PB[Prompt Builder]
+  PB --&gt; LLM[Gemini]
+  LLM --&gt; SQL[SQL Gerado]
+  SQL --&gt; GUARD[SQL Guard (SELECT-only, sanitize, LIMIT)]
+  GUARD --&gt;|válido| EXEC
+  GUARD --&gt;|inválido| FIX[Repair via LLM]
+  FIX --&gt; GUARD
+  EXEC --&gt; DB[(DuckDB In-Mem)]
+  DB --&gt; VIEWS{{Views: food, food_flat}}
+  VIEWS --&gt; DB
+  EXEC --&gt; ENRICH[Enricher (join por code)]
+  ENRICH --&gt; NLG[Resumo NLG]
+  NLG --&gt; OUT[Saída: Tabela + Resumo]
+  OUT --&gt; U
+  DB --- P[(food.parquet)]
+</div></code></pre>
+<h3 id="sequ%C3%AAncia-com-guarda-e-reparo">Sequência (com guarda e reparo)</h3>
+<pre class="hljs"><code><div>sequenceDiagram
+  participant U as Usuário
+  participant A as SQLAgent
+  participant G as Gemini
+  participant D as DuckDB
+  U-&gt;&gt;A: Pergunta NL (PT-BR)
+  A-&gt;&gt;A: Prompt Builder (schema + regras + few-shot)
+  A-&gt;&gt;G: generate_content(prompt)
+  G--&gt;&gt;A: SQL (SELECT)
+  A-&gt;&gt;A: SQL Guard (SELECT-only, LIMIT)
+  alt inválido
+    A-&gt;&gt;G: repair_sql(sql, erro)
+    G--&gt;&gt;A: SQL corrigido
+    A-&gt;&gt;A: SQL Guard
+  end
+  A-&gt;&gt;D: Executa SQL
+  D--&gt;&gt;A: DataFrame
+  A-&gt;&gt;A: Enriquecimento (se necessário)
+  A-&gt;&gt;A: NLG (resumo estatístico)
+  A--&gt;&gt;U: Tabela + Resumo
+</div></code></pre>
+<h3 id="recupera%C3%A7%C3%A3o-de-erros">Recuperação de Erros</h3>
+<pre class="hljs"><code><div>flowchart LR
+  EXEC[Execução SQL] -. erro .-&gt; REPAIR[LLM Repair]
+  REPAIR --&gt; GUARD[SQL Guard]
+  GUARD --&gt; EXEC
+</div></code></pre>
+<h2 id="fluxo-intuitivo-quadrados-e-setas">Fluxo Intuitivo (Quadrados e Setas)</h2>
+<h3 id="natural-pergunta-em-pt-br">Natural (Pergunta em PT-BR)</h3>
+<pre class="hljs"><code><div>[ Usuário ] --&gt; [ CLI do Agente ] --&gt; [ Constrói Prompt ] --&gt; [ LLM (Gemini) ]
+                 |                                                         |
+                 |                            SQL (apenas SELECT)         v
+                 +---------------------&gt; [ SQL Guard + LIMIT ] ------&gt; [ DuckDB ]
+                                                                               |
+                                                                               v
+                                                                     [ NLG (Resumo) ]
+                                                                               |
+                                                                               v
+                                                                      [ Resposta ]
+</div></code></pre>
+<h3 id="manual-digitando-sql">Manual (Digitando /sql)</h3>
+<pre class="hljs"><code><div>[ Usuário ] --&gt; [ CLI do Agente ] -- /sql --&gt; [ Executor SQL ] --&gt; [ DuckDB ] --&gt; [ Resposta ]
+</div></code></pre>
+<p>Notas rápidas para o leitor</p>
+<ul>
+<li>O LLM recebe somente esquema/amostras, não o dataset completo.</li>
+<li>O Guard impede qualquer DDL/DML, aceita apenas SELECT com LIMIT.</li>
+<li>A view <code>food_flat</code> simplifica nutrientes, unidades e quantidades (g/ml).</li>
+</ul>
+<h2 id="modelo-de-dados-resumo">Modelo de Dados (resumo)</h2>
+<ul>
+<li>Tabela <code>food</code> (do Parquet): ~110 colunas. Destaques:
+<ul>
+<li><code>product_name</code> (LIST&lt;STRUCT(lang, text)&gt;)</li>
+<li><code>brands</code>, <code>categories</code></li>
+<li><code>nutriments</code> (LIST&lt;STRUCT(name, value, &quot;100g&quot;, serving, unit, ...)&gt;): energy-kcal, proteins, fat, saturated-fat, sugars, carbohydrates, fiber, salt, sodium, vitaminas etc.</li>
+<li><code>product_quantity</code>, <code>product_quantity_unit</code>, <code>quantity</code>, <code>serving_quantity</code>, <code>serving_size</code></li>
+</ul>
+</li>
+<li>View <code>food_flat</code> (derivada):
+<ul>
+<li>Identificação: <code>code</code>, <code>name</code>, <code>brands</code>, <code>categories</code></li>
+<li>Normalizações (para filtro robusto): <code>name_norm</code>, <code>brands_norm</code>, <code>categories_norm</code></li>
+<li>Quantidades: <code>quantity_g</code>, <code>quantity_ml</code></li>
+<li>Nutrientes por 100 g: <code>energy_kcal_100g</code>, <code>proteins_100g</code>, <code>fat_100g</code>, <code>saturated_fat_100g</code>, <code>carbs_100g</code>, <code>sugars_100g</code>, <code>fiber_100g</code>, <code>salt_100g</code>, <code>sodium_100g</code></li>
+<li>Por porção e unidades: <code>energy_kcal_serving</code>, <code>energy_kcal_unit</code>, <code>proteins_serving</code>, <code>proteins_unit</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="engenharia-de-prompt-seguran%C3%A7a-e-precis%C3%A3o">Engenharia de Prompt (segurança e precisão)</h2>
+<ul>
+<li>Somente <code>SELECT</code> (bloqueio de DDL/DML e múltiplas instruções).</li>
+<li>Remoção de cercas e pós-processamento (sanitização).</li>
+<li>Few-shot de consultas típicas (proteína/kcal, Coca-Cola por volume, etc.).</li>
+<li>Regras específicas:
+<ul>
+<li>Preferir <code>food_flat</code> para métricas nutricionais.</li>
+<li>Projetar sempre <code>name</code>, <code>brands</code> e unidades relevantes.</li>
+<li>Filtrar <code>IS NOT NULL</code> em métricas e usar colunas normalizadas para LIKE.</li>
+<li>Acesso a <code>nutriments</code> via <code>UNNEST</code> quando necessário.</li>
+<li>Heurística para &quot;N unidades&quot;: usar mediana por porção quando existir; fallback por 100 g com pesos típicos (ex.: ovo 50 g).</li>
+</ul>
+</li>
+</ul>
+<h2 id="capacidades">Capacidades</h2>
+<ul>
+<li>Perguntas em PT-BR sobre:
+<ul>
+<li>Proteína / calorias / açúcar / gordura / saturada / carboidratos / fibra por 100 g ou por porção.</li>
+<li>Sódio/sal, colesterol, vitaminas e minerais mais comuns (C, A, D, cálcio, ferro, potássio…).</li>
+<li>Categorias e identificação de produtos por nome/marca.</li>
+<li>Quantidade total de embalagem (g/ml), com filtros (≥ 1 L, ≥ 1 kg, etc.).</li>
+<li>Score/qualidade: NOVA, NutriScore, nutrition-score-fr.</li>
+<li>Resumo automático (NLG) com estatísticas simples.</li>
+</ul>
+</li>
+</ul>
+<h2 id="execu%C3%A7%C3%A3o-e-uso">Execução e Uso</h2>
+<ul>
+<li>Modo IA (Gemini):
+<ul>
+<li><code>export GOOGLE_API_KEY='...'</code></li>
+<li><code>python sql_agent.py</code></li>
+<li>Perguntas livres em PT-BR (ex.: &quot;quanta proteína tem um iogurte itambé por 100g?&quot;)</li>
+</ul>
+</li>
+<li>Modo manual (sem IA):
+<ul>
+<li><code>python sql_agent.py --no-llm</code></li>
+<li>Comandos: <code>/schema</code>, <code>/sample 5</code>, <code>/sql &lt;consulta&gt;</code>, <code>/format pretty|json|csv</code>, <code>/nlg on|off</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="exemplos-de-perguntas-dieta">Exemplos de Perguntas (dieta)</h2>
+<ul>
+<li>&quot;iogurtes com menos de 5 g de açúcar por 100g&quot;</li>
+<li>&quot;coca-cola com volume a partir de 1 litro, com categorias&quot;</li>
+<li>&quot;pães com mais fibra por 100g&quot;</li>
+<li>&quot;top 10 barras por proteína/kcal&quot;</li>
+<li>&quot;quanto de proteína tem em 3 ovos caipiras&quot; (usa mediana por porção; fallback ovo=50 g)</li>
+</ul>
+<h2 id="seguran%C3%A7a-e-privacidade">Segurança e Privacidade</h2>
+<ul>
+<li>SQL estritamente <code>SELECT</code> com filtros anti-injeção simples.</li>
+<li>Execução local; sem envio de dados do Parquet ao LLM (somente esquema e amostras).</li>
+</ul>
+<h2 id="performance">Performance</h2>
+<ul>
+<li>Leitura direta do Parquet com <code>read_parquet</code> (DuckDB in-memory).</li>
+<li>Sugestão: materialização opcional em <code>.duckdb</code> para latência menor e caching de <code>food_flat</code>.</li>
+</ul>
+<h2 id="limita%C3%A7%C3%B5es-e-pr%C3%B3ximos-passos">Limitações e Próximos Passos</h2>
+<ul>
+<li>Parser determinístico de intenções (unidades/quantidades) no código, com tabela de pesos/porções por categoria.</li>
+<li>Densidades específicas para conversão ml↔g por categoria de bebida.</li>
+<li>Deduplicação por <code>code</code>/marca ao resumir.</li>
+<li>API/serviço (FastAPI) e UI web.</li>
+</ul>
+<h2 id="estrutura-de-arquivos">Estrutura de Arquivos</h2>
+<ul>
+<li><code>sql_agent.py</code>: agente, LLM, CLI e views.</li>
+<li><code>docs/SHOWCASE.md</code>: este documento (visão geral, arquitetura e guia).</li>
+</ul>
+
+</body>
+</html>
